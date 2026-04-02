@@ -1,110 +1,72 @@
-import { Link } from "react-router-dom"
-import PageLayout from "../components/PageTemplate/PageLayout"
-import PageHero from "../components/PageTemplate/PageHero"
-import PageSection from "../components/PageTemplate/PageSection"
-import PageCTA from "../components/PageTemplate/PageCTA"
-import CardGrid from "../components/Cards/CardGrid"
-import MetricCard from "../components/Cards/MetricCard"
-import InfoCard from "../components/Cards/InfoCard"
-import QuoteCard from "../components/Cards/QuoteCard"
-import Timeline, { TimelineItem } from "../components/Timeline/Timeline"
-import { headlineStats, impactHighlights, milestones, testimonials } from "../data/organization"
-import { sitePaths } from "../site"
-import "../styles/features.css"
-import "../styles/pages.css"
+import { motion } from "framer-motion"
+import { impactHighlights, impactStories } from "../data/organization"
+import { usePageTitle } from "../hooks/usePageTitle"
+import { pageTitles } from "../config/pageTitles"
+import "./Pages.css"
 
 export default function Impact() {
+  usePageTitle(pageTitles.impact.title, pageTitles.impact.description)
   return (
-    <PageLayout
-      seoTitle="Impact | Jeevika Foundation"
-      seoDescription="Explore Jeevika Foundation's impact across education, health, livelihoods, and community resilience."
-    >
-      <PageHero
-        kicker="What is changing"
-        title="Measurable progress, rooted in people and place"
-        description="We measure impact through outcomes, participation, trust, and long-term community capability. The numbers matter because the lives, relationships, and progress behind them matter."
-      />
+    <div className="page-container">
+      <section className="page-hero">
+        <div className="container">
+          <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7 }}>
+            Impact & Stories
+          </motion.h1>
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7, delay: 0.1 }}>
+            Measurable progress and inspiring stories from communities we serve.
+          </motion.p>
+        </div>
+      </section>
 
-      <PageSection variant="default" title="Impact headline metrics">
-        <CardGrid columns={2}>
-          {headlineStats.map((stat) => (
-            <MetricCard
-              key={stat.label}
-              value={stat.value}
-              label={stat.label}
-              description={stat.description}
-            />
-          ))}
-        </CardGrid>
-      </PageSection>
+      <section className="page-content">
+        <div className="container">
+          <h2>Impact Areas</h2>
+          <div className="page-grid">
+            {impactHighlights.map((area) => {
+              const Icon = area.icon
+              return (
+                <motion.div key={area.title} className="page-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                  <Icon size={24} style={{ color: "var(--primary)", marginBottom: 12 }} />
+                  <h3>{area.title}</h3>
+                  <p>{area.description}</p>
+                  <p style={{ marginTop: 12, fontSize: 12, fontWeight: 600, color: "var(--primary)" }}>{area.metric}</p>
+                </motion.div>
+              )
+            })}
+          </div>
 
-      <PageSection
-        variant="default"
-        kicker="Where progress appears"
-        title="Program outcomes across our core areas"
-        description="We build impact through layered interventions that combine direct support with skills, relationships, and local participation."
-      >
-        <CardGrid columns={3}>
-          {impactHighlights.map((item) => {
-            const Icon = item.icon
-            return (
-              <InfoCard
-                key={item.title}
-                icon={<Icon size={30} />}
-                title={item.title}
-                description={item.description}
-                meta={item.metric}
-              />
-            )
-          })}
-        </CardGrid>
-      </PageSection>
-
-      <PageSection
-        variant="soft"
-        kicker="Progress over time"
-        title="How the work has evolved"
-      >
-        <Timeline>
-          {milestones.map((milestone) => (
-            <TimelineItem
-              key={milestone.year}
-              year={milestone.year}
-              title={milestone.title}
-              description={milestone.description}
-            />
-          ))}
-        </Timeline>
-      </PageSection>
-
-      <PageSection
-        variant="default"
-        kicker="Voices and reflections"
-        title="Impact that communities can describe in their own words"
-      >
-        <CardGrid columns={3}>
-          {testimonials.slice(0, 3).map((testimonial) => (
-            <QuoteCard
-              key={testimonial.author}
-              quote={testimonial.quote}
-              author={testimonial.author}
-              role={testimonial.role}
-            />
-          ))}
-        </CardGrid>
-      </PageSection>
-
-      <PageCTA
-        title="Support the next chapter of impact"
-        description="We are always looking for committed supporters, implementation partners, and champions who believe in dignified, community-led change."
-      >
-        <Link to={sitePaths.getInvolved} className="cta-btn">
-          Get Involved
-        </Link>
-        <Link to={sitePaths.contact} className="cta-btn cta-btn-outline">
-          Partner With Us
-        </Link>
-      </PageCTA>
-    </PageLayout>
+          <h2 style={{ marginTop: 60 }}>Community Stories</h2>
+          <div style={{ marginTop: 32 }}>
+            {impactStories.map((story, idx) => (
+              <motion.div
+                key={story.title}
+                style={{
+                  marginBottom: 40,
+                  padding: 32,
+                  backgroundColor: "var(--bg-light)",
+                  borderRadius: 12,
+                  borderLeft: "4px solid var(--primary)",
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 16 }}>
+                  <div>
+                    <h3 style={{ marginBottom: 4 }}>{story.title}</h3>
+                    <p style={{ fontSize: 12, fontWeight: 600, color: "var(--primary)", textTransform: "uppercase", letterSpacing: 0.5 }}>{story.category}</p>
+                  </div>
+                  <p style={{ fontSize: 12, fontWeight: 600, color: "var(--text-secondary)", backgroundColor: "white", padding: "4px 12px", borderRadius: 20 }}>{story.metric}</p>
+                </div>
+                <p style={{ marginBottom: 16, lineHeight: 1.8, color: "var(--text-secondary)" }}>{story.story}</p>
+                <p style={{ fontSize: 13, fontWeight: 600, color: "var(--primary)" }}>— {story.beneficiary}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

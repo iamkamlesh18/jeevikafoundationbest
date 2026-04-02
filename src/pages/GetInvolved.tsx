@@ -1,99 +1,122 @@
-import { Link } from "react-router-dom"
-import PageLayout from "../components/PageTemplate/PageLayout"
-import PageHero from "../components/PageTemplate/PageHero"
-import PageSection from "../components/PageTemplate/PageSection"
-import PageCTA from "../components/PageTemplate/PageCTA"
-import CardGrid from "../components/Cards/CardGrid"
-import InfoCard from "../components/Cards/InfoCard"
-import FAQList, { FAQItem } from "../components/FAQ/FAQList"
-import { organizationFaqs, involvementOptions } from "../data/organization"
-import { siteConfig, sitePaths } from "../site"
-import "../styles/features.css"
-import "../styles/pages.css"
+import { motion } from "framer-motion"
+import { FiUsers, FiDollarSign, FiShare2 } from "react-icons/fi"
+import { involvementOptions } from "../data/organization"
+import { usePageTitle } from "../hooks/usePageTitle"
+import { pageTitles } from "../config/pageTitles"
+import "./Pages.css"
+
+const iconMap: Record<number, React.ReactNode> = {
+  0: <FiUsers size={32} />,
+  1: <FiUsers size={32} />,
+  2: <FiDollarSign size={32} />,
+  3: <FiShare2 size={32} />,
+}
 
 export default function GetInvolved() {
+  usePageTitle(pageTitles.getInvolved.title, pageTitles.getInvolved.description)
   return (
-    <PageLayout
-      seoTitle="Get Involved | Jeevika Foundation"
-      seoDescription="Volunteer, partner, give, or advocate with Jeevika Foundation to support community-led impact."
-    >
-      <PageHero
-        kicker="Ways to participate"
-        title="There are many ways to build impact with us"
-        description="Whether you bring time, funding, expertise, or community relationships, your support can strengthen long-term programs where they are needed most."
-      />
+    <div className="page-container">
+      <section className="page-hero">
+        <div className="container">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            Get Involved
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
+            Multiple ways to support our mission and make a tangible difference.
+          </motion.p>
+        </div>
+      </section>
 
-      <PageSection variant="default" title="Ways to support the foundation">
-        <CardGrid columns={3}>
-          {involvementOptions.map((option) => (
-            <InfoCard
-              key={option.title}
-              title={option.title}
-              description={option.description}
+      <section className="page-content">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32 }}>
+            {involvementOptions.map((option, idx) => (
+              <motion.div
+                key={option.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.6 }}
+                whileHover={{ y: -8 }}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 12,
+                  border: "1px solid var(--border)",
+                  padding: 32,
+                  textAlign: "center" as const,
+                  minHeight: 280,
+                  display: "flex",
+                  flexDirection: "column" as const,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <div style={{ fontSize: 48, marginBottom: 16, color: "var(--primary)" }}>
+                  {iconMap[idx]}
+                </div>
+                <h3 style={{ marginBottom: 12 }}>{option.title}</h3>
+                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6 }}>
+                  {option.description}
+                </p>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    marginTop: "auto",
+                    padding: "10px 20px",
+                    backgroundColor: "var(--primary)",
+                    color: "white",
+                    border: "none",
+                    borderRadius: 6,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  Learn More
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="page-content" style={{ backgroundColor: "var(--bg-light)" }}>
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: "center", maxWidth: 600, margin: "0 auto" }}
+          >
+            <h2 style={{ marginBottom: 16 }}>Ready to Make a Difference?</h2>
+            <p style={{ marginBottom: 24, fontSize: 16, color: "var(--text-muted)" }}>
+              Whether you're interested in volunteering, partnering, or making a donation, we'd love to hear from you. Reach out and let's build impact together.
+            </p>
+            <motion.a
+              href="mailto:hello@jeevika.org"
+              whileHover={{ scale: 1.05 }}
+              style={{
+                display: "inline-block",
+                padding: "12px 32px",
+                backgroundColor: "var(--primary)",
+                color: "white",
+                borderRadius: 6,
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: 600,
+                transition: "all 0.2s",
+              }}
             >
-              <Link to={sitePaths.contact} className="inline-link">
-                Start here
-              </Link>
-            </InfoCard>
-          ))}
-        </CardGrid>
-      </PageSection>
-
-      <PageSection variant="soft">
-        <CardGrid columns={2}>
-          <div className="card detail-card">
-            <span className="section-kicker">If you want to volunteer</span>
-            <h3>Contribute your time and skills</h3>
-            <p>
-              Volunteers support events, mentoring, communications, research, digital literacy, and
-              field coordination depending on current program needs.
-            </p>
-            <a href={`mailto:${siteConfig.email}?subject=Volunteer Inquiry`} className="btn btn-secondary">
-              Email the team
-            </a>
-          </div>
-
-          <div className="card detail-card">
-            <span className="section-kicker">If you want to partner</span>
-            <h3>Design meaningful partnerships</h3>
-            <p>
-              We collaborate with companies, educators, healthcare providers, and community groups
-              on implementation, CSR, and long-term capacity-building efforts.
-            </p>
-            <a href={`mailto:${siteConfig.email}?subject=Partnership Inquiry`} className="btn btn-outline">
-              Explore partnership
-            </a>
-          </div>
-        </CardGrid>
-      </PageSection>
-
-      <PageSection
-        variant="default"
-        kicker="Common questions"
-        title="Common questions from new supporters"
-      >
-        <FAQList>
-          {organizationFaqs.map((item) => (
-            <FAQItem
-              key={item.question}
-              question={item.question}
-              answer={item.answer}
-            />
-          ))}
-        </FAQList>
-      </PageSection>
-
-      <PageCTA
-        title="Ready to make your contribution count?"
-        description="Tell us how you would like to help and we will guide you toward the most relevant next step."
-      >
-        <Link to={sitePaths.contact} className="cta-btn">
-          Contact Us
-        </Link>
-        <Link to={sitePaths.projects} className="cta-btn cta-btn-outline">
-          View Programs
-        </Link>
-      </PageCTA>
-    </PageLayout>
+              Get in Touch
+            </motion.a>
+          </motion.div>
+        </div>
+      </section>
+    </div>
   )
 }

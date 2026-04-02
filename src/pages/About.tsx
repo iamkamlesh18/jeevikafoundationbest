@@ -1,82 +1,142 @@
-import { Link } from "react-router-dom"
-import PageLayout from "../components/PageTemplate/PageLayout"
-import PageHero from "../components/PageTemplate/PageHero"
-import PageSection from "../components/PageTemplate/PageSection"
-import PageCTA from "../components/PageTemplate/PageCTA"
-import CardGrid from "../components/Cards/CardGrid"
-import InfoCard from "../components/Cards/InfoCard"
-import MetricCard from "../components/Cards/MetricCard"
-import { headlineStats, organizationOverview, values } from "../data/organization"
-import { sitePaths } from "../site"
-import "../styles/features.css"
-import "../styles/pages.css"
+import { motion } from "framer-motion"
+import { organizationOverview, values, milestones } from "../data/organization"
+import { usePageTitle } from "../hooks/usePageTitle"
+import { pageTitles } from "../config/pageTitles"
+import "./Pages.css"
 
 export default function About() {
+  usePageTitle(pageTitles.about.title, pageTitles.about.description)
   return (
-    <PageLayout
-      seoTitle="About | Jeevika Foundation"
-      seoDescription="Learn about Jeevika Foundation's mission, values, and community-led approach to social impact."
-    >
-      <PageHero
-        kicker="Who we are"
-        title={organizationOverview.tagline}
-        description={organizationOverview.mission}
-      />
-
-      <PageSection variant="default" kicker="How we began" title="How the foundation grew from local intent to broader impact">
-        <div className="faq-list">
-          {organizationOverview.story.map((paragraph) => (
-            <article key={paragraph} className="faq-item">
-              <p>{paragraph}</p>
-            </article>
-          ))}
+    <div className="page-container">
+      <section className="page-hero">
+        <div className="container">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            About Jeevika Foundation
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
+            {organizationOverview.tagline}
+          </motion.p>
         </div>
-      </PageSection>
+      </section>
 
-      <PageSection
-        variant="soft"
-        kicker="What guides us"
-        title="What guides our decisions and relationships"
-      >
-        <CardGrid columns={3}>
-          {values.map((value) => {
-            const Icon = value.icon
-            return (
-              <InfoCard
-                key={value.title}
-                icon={<Icon size={28} />}
-                title={value.title}
-                description={value.description}
-              />
-            )
-          })}
-        </CardGrid>
-      </PageSection>
+      {/* Mission Section */}
+      <section className="page-content">
+        <div className="container">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
+            <h2>Our Mission</h2>
+            <p>{organizationOverview.mission}</p>
+          </motion.div>
+        </div>
+      </section>
 
-      <PageSection variant="default" title="Key organization highlights">
-        <CardGrid columns={2}>
-          {headlineStats.map((stat) => (
-            <MetricCard
-              key={stat.label}
-              value={stat.value}
-              label={stat.label}
-              description={stat.description}
-            />
-          ))}
-        </CardGrid>
-      </PageSection>
+      {/* Story Section */}
+      <section className="page-content" style={{ backgroundColor: "var(--bg-light)" }}>
+        <div className="container">
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            <h2 style={{ marginBottom: 32 }}>Our Story</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, alignItems: "center" }}>
+              <div>
+                {organizationOverview.story.map((paragraph, idx) => (
+                  <motion.p
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    style={{ marginBottom: 16, lineHeight: 1.8 }}
+                  >
+                    {paragraph}
+                  </motion.p>
+                ))}
+              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                style={{
+                  backgroundColor: "var(--primary)",
+                  borderRadius: 16,
+                  padding: 40,
+                  color: "white",
+                  minHeight: 300,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  fontSize: 48,
+                  fontWeight: 700,
+                }}
+              >
+                Building Dignity & Opportunity
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-      <PageCTA
-        title="Meet the people behind the work"
-        description="Learn more about the people, values, and leadership approach guiding how we steward partnerships and programs with accountability."
-      >
-        <Link to={sitePaths.team} className="cta-btn">
-          Visit Team Page
-        </Link>
-        <Link to={sitePaths.impact} className="cta-btn cta-btn-outline">
-          Explore Impact
-        </Link>
-      </PageCTA>
-    </PageLayout>
+      {/* Values Section */}
+      <section className="page-content">
+        <div className="container">
+          <motion.h2 style={{ marginBottom: 40, textAlign: "center" }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            Our Values
+          </motion.h2>
+
+          <div className="page-grid">
+            {values.map((value, idx) => {
+              const Icon = value.icon
+              return (
+                <motion.div
+                  key={value.title}
+                  className="page-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.6 }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 48, height: 48, borderRadius: 12, backgroundColor: "var(--primary)", color: "white", marginBottom: 16 }}>
+                    <Icon size={24} />
+                  </div>
+                  <h3>{value.title}</h3>
+                  <p>{value.description}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="page-content" style={{ backgroundColor: "var(--bg-light)" }}>
+        <div className="container">
+          <motion.h2 style={{ marginBottom: 40, textAlign: "center" }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            Our Journey
+          </motion.h2>
+          <div style={{ marginTop: 40, maxWidth: 800, margin: "0 auto" }}>
+            {milestones.map((milestone, idx) => (
+              <motion.div
+                key={milestone.year}
+                style={{
+                  marginBottom: 40,
+                  display: "flex",
+                  gap: 24,
+                  paddingBottom: 40,
+                  borderBottom: idx !== milestones.length - 1 ? "1px solid var(--border-light)" : "none",
+                }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+              >
+                <div style={{ fontWeight: 700, color: "var(--primary)", minWidth: 80, fontSize: 24 }}>{milestone.year}</div>
+                <div>
+                  <h4 style={{ fontWeight: 600, marginBottom: 8, fontSize: 18 }}>{milestone.title}</h4>
+                  <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.6 }}>{milestone.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

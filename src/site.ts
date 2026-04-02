@@ -18,12 +18,12 @@ export const siteConfig = {
   ],
   navigation: [
     { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/projects", label: "Programs" },
-    { path: "/impact", label: "Impact" },
-    { path: "/get-involved", label: "Get Involved" },
-    { path: "/blog", label: "Stories" },
-    { path: "/contact", label: "Contact" },
+    { path: "/about/", label: "About" },
+    { path: "/projects/", label: "Programs" },
+    { path: "/impact/", label: "Impact" },
+    { path: "/get-involved/", label: "Get Involved" },
+    { path: "/blog/", label: "Stories" },
+    { path: "/contact/", label: "Contact" },
   ],
   focusAreas: [
     "Education Access",

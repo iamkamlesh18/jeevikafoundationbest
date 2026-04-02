@@ -144,6 +144,51 @@ export const testimonials = [
   },
 ] as const
 
+export const impactStories = [
+  {
+    title: "Digital Pathways: From Village to College",
+    category: "Education",
+    story: "Priya and her siblings live in a remote village with limited internet access. Through our digital learning program, she accessed quality education resources, mentoring, and scholarship support. Today, she's pursuing engineering at a top college.",
+    metric: "300+ learners reached annually",
+    beneficiary: "Priya Kumar",
+  },
+  {
+    title: "Transforming Skills into Sustainable Income",
+    category: "Livelihoods",
+    story: "Rajesh completed our vocational training in carpentry and business basics. With microcredit support, he established his own workshop, now employing two apprentices and earning 3x his previous daily wage.",
+    metric: "500+ people trained in 2025",
+    beneficiary: "Rajesh Singh",
+  },
+  {
+    title: "Health Camps Reach Remote Areas",
+    category: "Health",
+    story: "Our mobile health clinics visit villages monthly, providing check-ups, awareness on nutrition, maternal health, and disease prevention. One camp detected diabetes in 40 people early, preventing complications.",
+    metric: "1000+ beneficiaries per month",
+    beneficiary: "Village of Dhanpur",
+  },
+  {
+    title: "Women Leaders Shaping Community Change",
+    category: "Women's Leadership",
+    story: "Anita was shy and had never spoken in public. Through our women's leadership program, she gained financial literacy, entrepreneurial confidence, and voice in village-level decisions. Now she's a Self Help Group leader.",
+    metric: "300+ women in leadership roles",
+    beneficiary: "Anita Deshmukh",
+  },
+  {
+    title: "Bridging the Literacy Gap",
+    category: "Education",
+    story: "Our bridge-learning centers serve 8-14 year-olds who dropped out or never enrolled. Through foundational literacy, numeracy, and life skills, children regain confidence and rejoin formal schools.",
+    metric: "150+ children enrolled in bridge programs",
+    beneficiary: "Govind, Age 10",
+  },
+  {
+    title: "Community-Led Health Awareness",
+    category: "Health",
+    story: "Instead of top-down campaigns, we train local health workers from the community. They lead awareness drives on sanitation, vaccination, and prenatal care—trusted voices that actually create behavior change.",
+    metric: "5000+ people reached annually",
+    beneficiary: "Health Worker Network",
+  },
+] as const
+
 export const involvementOptions = [
   {
     title: "Volunteer Your Time",

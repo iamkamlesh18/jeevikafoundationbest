@@ -1,5 +1,0 @@
-export { default as InfoCard } from "./InfoCard"
-export { default as ProfileCard } from "./ProfileCard"
-export { default as MetricCard } from "./MetricCard"
-export { default as QuoteCard } from "./QuoteCard"
-export { default as CardGrid } from "./CardGrid"

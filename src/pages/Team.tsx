@@ -1,58 +1,75 @@
-import PageLayout from "../components/PageTemplate/PageLayout"
-import PageHero from "../components/PageTemplate/PageHero"
-import PageSection from "../components/PageTemplate/PageSection"
-import CardGrid from "../components/Cards/CardGrid"
-import ProfileCard from "../components/Cards/ProfileCard"
-import InfoCard from "../components/Cards/InfoCard"
-import { leadershipTeam, values } from "../data/organization"
-import "../styles/features.css"
-import "../styles/pages.css"
+import { motion } from "framer-motion"
+import { leadershipTeam } from "../data/organization"
+import { usePageTitle } from "../hooks/usePageTitle"
+import { pageTitles } from "../config/pageTitles"
+import "./Pages.css"
 
 export default function Team() {
+  usePageTitle(pageTitles.team.title, pageTitles.team.description)
   return (
-    <PageLayout
-      seoTitle="Team | Jeevika Foundation"
-      seoDescription="Meet the leadership team and values guiding Jeevika Foundation's work."
-    >
-      <PageHero
-        kicker="Team"
-        title="People who steward the work with care and accountability"
-        description="Our leadership team brings field experience, implementation discipline, and a deep commitment to respectful community partnership."
-      />
+    <div className="page-container">
+      <section className="page-hero">
+        <div className="container">
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            Our Team
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
+            Dedicated professionals working toward lasting community impact.
+          </motion.p>
+        </div>
+      </section>
 
-      <PageSection variant="default" title="Leadership team">
-        <CardGrid columns={3}>
-          {leadershipTeam.map((member) => (
-            <ProfileCard
-              key={member.name}
-              name={member.name}
-              role={member.role}
-              badge={member.name.charAt(0)}
-              bio={member.bio}
-            />
-          ))}
-        </CardGrid>
-      </PageSection>
+      <section className="page-content">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32 }}>
+            {leadershipTeam.map((member, idx) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1, duration: 0.6 }}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 12,
+                  border: "1px solid var(--border)",
+                  overflow: "hidden",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  transition: "all 0.3s ease",
+                }}
+                whileHover={{ y: -8, boxShadow: "0 12px 24px rgba(0,0,0,0.12)" }}
+              >
+                {/* Member Avatar */}
+                <div
+                  style={{
+                    backgroundColor: "var(--bg-light)",
+                    height: 200,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 80,
+                    fontWeight: 700,
+                    color: "var(--primary)",
+                  }}
+                >
+                  {member.name.charAt(0)}
+                </div>
 
-      <PageSection
-        variant="soft"
-        kicker="How we lead"
-        title="Values that shape our decisions"
-      >
-        <CardGrid columns={3}>
-          {values.map((value) => {
-            const Icon = value.icon
-            return (
-              <InfoCard
-                key={value.title}
-                icon={<Icon size={28} />}
-                title={value.title}
-                description={value.description}
-              />
-            )
-          })}
-        </CardGrid>
-      </PageSection>
-    </PageLayout>
+                {/* Member Info */}
+                <div style={{ padding: 24 }}>
+                  <h3 style={{ marginBottom: 8 }}>{member.name}</h3>
+                  <p style={{ fontSize: 13, fontWeight: 600, color: "var(--primary)", marginBottom: 16, textTransform: "uppercase" }}>
+                    {member.role}
+                  </p>
+                  <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--text-muted)" }}>
+                    {member.bio}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
