@@ -1,7 +1,13 @@
+const pagesBasePath = import.meta.env.BASE_URL === "/"
+  ? ""
+  : import.meta.env.BASE_URL.replace(/\/$/, "")
+
+const siteOrigin = "https://iamkamlesh18.github.io"
+
 export const siteConfig = {
   name: "Jeevika Foundation",
-  siteUrl: "https://example.com",
-  basePath: "",
+  siteUrl: `${siteOrigin}${pagesBasePath}`,
+  basePath: pagesBasePath,
   email: "jeevikafoundation@gmail.com",
   phone: "+91 7770000347",
   location: "2nd Floor, Shree Ganesh Complex, FC Road, Shivajinagar, Pune, Maharashtra 411005",
@@ -19,7 +25,7 @@ export const siteConfig = {
   navigation: [
     { path: "/", label: "Home" },
     { path: "/about/", label: "About" },
-    { path: "/projects/", label: "Programs" },
+    { path: "/programs/", label: "Programs" },
     { path: "/impact/", label: "Impact" },
     { path: "/get-involved/", label: "Get Involved" },
     { path: "/blog/", label: "Stories" },
@@ -37,24 +43,21 @@ export const siteConfig = {
 export const sitePaths = {
   home: `${siteConfig.basePath}`,
   about: `${siteConfig.basePath}/about`,
-  projects: `${siteConfig.basePath}/projects`,
+  programs: `${siteConfig.basePath}/programs`,
   impact: `${siteConfig.basePath}/impact`,
   getInvolved: `${siteConfig.basePath}/get-involved`,
   team: `${siteConfig.basePath}/team`,
   blog: `${siteConfig.basePath}/blog`,
   contact: `${siteConfig.basePath}/contact`,
-  privacyPolicy: `${siteConfig.basePath}/privacy-policy`,
-  termsOfService: `${siteConfig.basePath}/terms-of-service`,
-  cookiePolicy: `${siteConfig.basePath}/cookie-policy`,
 } as const
 
 export function buildAbsoluteUrl(path = "") {
   const origin = typeof window !== "undefined" && window.location.origin
-    ? window.location.origin
+    ? `${window.location.origin}${siteConfig.basePath}`
     : siteConfig.siteUrl
 
   if (!path) {
-    return `${origin.replace(/\/$/, "")}${siteConfig.basePath}`
+    return origin.replace(/\/$/, "")
   }
 
   if (/^https?:\/\//.test(path)) {
@@ -63,4 +66,3 @@ export function buildAbsoluteUrl(path = "") {
 
   return `${origin.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`
 }
-
