@@ -19,6 +19,10 @@ import GetInvolved from "./pages/GetInvolved"
 // Routes configuration
 import { routes } from "./routes"
 
+const routerBase = import.meta.env.BASE_URL === "/"
+  ? "/"
+  : import.meta.env.BASE_URL.replace(/\/$/, "")
+
 function AppContent() {
   const location = useLocation()
   
@@ -48,9 +52,8 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/jeevikafoundation/">
+    <BrowserRouter basename={routerBase}>
       <AppContent />
     </BrowserRouter>
   )
 }
-
