@@ -16,6 +16,6 @@ Separate deployment project for the upgraded Jeevika Foundation site.
 
 ## Notes
 
-- Local routes use paths like `/about` and `/programs`
-- GitHub Pages routes use `/jeevikafoundationbest/about` and `/jeevikafoundationbest/programs`
+- Local and GitHub Pages both use `/jeevikafoundationbest/...`
+- Example routes: `/jeevikafoundationbest/about` and `/jeevikafoundationbest/programs`
 - `public/404.html` is included so direct page refreshes work on GitHub Pages
